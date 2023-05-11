@@ -5,7 +5,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 // import Button from "@material-ui/core/Button";
 // import Typography from "@material-ui/core/Typography";
-import NewvsReturnVisitors from "./newvsreturnvisitors";
 
 // const useStyles = makeStyles({
 //   root: {
@@ -24,15 +23,18 @@ import NewvsReturnVisitors from "./newvsreturnvisitors";
 //   }
 // });
 
-export default function SimpleCard(props) {
+const SimpleCard = React.forwardRef((props, ref) =>{
   // const classes = useStyles();
   // const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <Card style={props.style.main}>
+    <Card style={props.style.main} ref={ref}>
       <CardContent>
-        <NewvsReturnVisitors props={props.style.main} />
+        {props.title}
       </CardContent>
     </Card>
   );
-}
+});
+
+
+export default SimpleCard;

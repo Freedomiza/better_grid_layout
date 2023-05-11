@@ -1,15 +1,14 @@
+import cx from "classnames";
 import React, { useCallback, useState } from "react";
-import Card from "./card";
 import ReactDOM from "react-dom";
 import "./styles/styles.css";
-import cx from "classnames";
 
 import GridLayout, { GRID_BREAKPOINTS, GRID_COLUMNS } from "./grid/GridLayout";
 import { generateMobileLayout } from "./grid/utils";
 
 const e = React.createElement;
 const DEFAULT_CARD_SIZE = {
-  with: 2,
+  width: 2,
   height: 2
 };
 const styles = {
@@ -21,7 +20,7 @@ const styles = {
 };
 
 function App() {
-  const [isEditingLayout, setIsEditingLayout] = useState(false);
+  const [isEditingLayout, setIsEditingLayout] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
   const [isAnimationPaused, setIsAnimationPaused] = useState(false);
   // const myRef = useRef(null);
@@ -33,7 +32,7 @@ function App() {
       y: 0,
       w: 2,
       h: 2,
-      display: "scalar"
+      display: "action"
     },
     {
       id: 2,
@@ -41,7 +40,7 @@ function App() {
       y: 2,
       w: 2,
       h: 2,
-      display: "scalar"
+      display: "action"
     }
   ];
   // const layout = {
@@ -88,10 +87,10 @@ function App() {
     const minSize = DEFAULT_CARD_SIZE;
     return {
       i: String(dashcard.id),
-      x: dashcard.col || 0,
-      y: dashcard.row || 0,
-      w: dashcard.width || initialSize.width,
-      h: dashcard.height || initialSize.height,
+      x: dashcard.x || 0,
+      y: dashcard.y || 0,
+      w: dashcard.w || initialSize.width,
+      h: dashcard.h || initialSize.height,
       dashcard: dashcard,
       minW: minSize.width,
       minH: minSize.height
@@ -114,13 +113,20 @@ function App() {
     gridItemWidth,
     totalNumGridCols
   }) => (
-    <Card
-      key={String(dc.id)}
-      className="DashCard"
-      isAnimationDisabled={isAnimationPaused}
-    >
-      {dc.id}
-    </Card>
+    <div  key={String(dc.id)}>
+      <span>
+        {dc.title}
+      </span>
+    </div>
+    // <SimpleCard
+    //   key={String(dc.id)}
+    //   className="DashCard"
+    //   style={styles}
+    //   isAnimationDisabled={isAnimationPaused}
+    //   title={dc.title}
+    // >
+      
+    // </SimpleCard>
   );
 
   const onLayoutChange = ({ layout, breakpoint }) => {};
@@ -133,6 +139,7 @@ function App() {
         rowHeight={75}
         containerPadding={[0, 0]}
         verticalCompact={false}
+        width={1200}
         margin={{ desktop: [6, 6], mobile: [6, 10] }}
         className={cx("DashboardGrid", {
           "Dash--editing": isEditingLayout,
@@ -148,12 +155,18 @@ function App() {
         //    console.log('hello', event);
         //  }}
         items={[
-          <div key="1">
-            <Card style={styles} />
-          </div>,
-          <div key="2">
-            <Card style={styles} />
-          </div>
+          {
+            id: 1,
+            title: 'item 1',
+          },
+          {
+            id: 2,
+            title: 'item 2',          
+          }   ,
+          {
+            id: 3,
+            title: 'item 3',          
+          }       
         ]}
         itemRenderer={renderGridItem}
       ></GridLayout>
